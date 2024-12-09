@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'dashboard_model.dart';
 export 'dashboard_model.dart';
@@ -166,7 +167,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Follicular',
+                                            functions.getCyclePhase(
+                                                getCurrentTimestamp,
+                                                28,
+                                                getCurrentTimestamp),
                                             style: FlutterFlowTheme.of(context)
                                                 .titleLarge
                                                 .override(
@@ -202,7 +206,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'In 12 Days',
+                                            functions.calculateNextPeriodText(
+                                                getCurrentTimestamp,
+                                                28,
+                                                getCurrentTimestamp),
                                             style: FlutterFlowTheme.of(context)
                                                 .titleLarge
                                                 .override(
@@ -222,7 +229,12 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       inactiveColor: const Color(0xFFFFB6C1),
                                       min: 0.0,
                                       max: 28.0,
-                                      value: _model.sliderValue ??= 16.0,
+                                      value: _model.sliderValue ??= functions
+                                          .calculateDaysUntilNextPeriod(
+                                              getCurrentTimestamp,
+                                              28,
+                                              getCurrentTimestamp)
+                                          .toDouble(),
                                       onChanged: (newValue) {
                                         newValue = double.parse(
                                             newValue.toStringAsFixed(4));
@@ -521,7 +533,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Starts in 5 days',
+                                            functions.calculateOvulationWindow(
+                                                getCurrentTimestamp,
+                                                28,
+                                                getCurrentTimestamp),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -562,7 +577,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Starts in 8 days',
+                                            functions.calculateFertileWindow(
+                                                getCurrentTimestamp,
+                                                28,
+                                                getCurrentTimestamp),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(

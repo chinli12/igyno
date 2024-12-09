@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'calenda_model.dart';
 export 'calenda_model.dart';
 
@@ -24,6 +25,12 @@ class _CalendaWidgetState extends State<CalendaWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CalendaModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.inputedate = getCurrentTimestamp;
+      safeSetState(() {});
+    });
   }
 
   @override
@@ -137,7 +144,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'June 2023',
+                                        '${dateTimeFormat("MMMM", _model.inputedate)} ${dateTimeFormat("y", _model.inputedate)}',
                                         style: FlutterFlowTheme.of(context)
                                             .headlineSmall
                                             .override(
@@ -151,23 +158,47 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          const Icon(
-                                            Icons.chevron_left,
-                                            color: Color(0xFFFF69B4),
-                                            size: 24.0,
+                                          InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              _model.inputedate =
+                                                  functions.getLatmonth(
+                                                      _model.inputedate!);
+                                              safeSetState(() {});
+                                            },
+                                            child: const Icon(
+                                              Icons.chevron_left,
+                                              color: Color(0xFFFF69B4),
+                                              size: 24.0,
+                                            ),
                                           ),
-                                          const Icon(
-                                            Icons.chevron_right,
-                                            color: Color(0xFFFF69B4),
-                                            size: 24.0,
+                                          InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              _model.inputedate =
+                                                  functions.getNextmonth(
+                                                      _model.inputedate!);
+                                              safeSetState(() {});
+                                            },
+                                            child: const Icon(
+                                              Icons.chevron_right,
+                                              color: Color(0xFFFF69B4),
+                                              size: 24.0,
+                                            ),
                                           ),
                                         ].divide(const SizedBox(width: 12.0)),
                                       ),
                                     ],
                                   ),
                                   Wrap(
-                                    spacing: 0.0,
-                                    runSpacing: 8.0,
+                                    spacing: 16.0,
+                                    runSpacing: 16.0,
                                     alignment: WrapAlignment.start,
                                     crossAxisAlignment:
                                         WrapCrossAlignment.start,
@@ -177,7 +208,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                     clipBehavior: Clip.none,
                                     children: [
                                       Text(
-                                        'S',
+                                        'Mon',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -189,7 +220,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'M',
+                                        'Tue',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -201,7 +232,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'T',
+                                        'Wed',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -213,7 +244,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'W',
+                                        'Thur',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -225,7 +256,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'T',
+                                        'Fri',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -237,7 +268,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'F',
+                                        'Sat',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -249,7 +280,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'S',
+                                        'Sun',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -265,8 +296,8 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                   Builder(
                                     builder: (context) {
                                       final item = functions
-                                          .getCalendar(getCurrentTimestamp,
-                                              getCurrentTimestamp, 28)
+                                          .getCalendar(getCurrentTimestamp, 5,
+                                              28, _model.inputedate!)
                                           .toList();
 
                                       return Wrap(
@@ -302,7 +333,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                                       .ovelation;
                                                 } else if (itemItem
                                                         .isInPeriod ==
-                                                    false) {
+                                                    true) {
                                                   return FlutterFlowTheme.of(
                                                           context)
                                                       .calendarperiod;
@@ -325,38 +356,21 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                                           ?.secondsSinceEpoch,
                                                       0,
                                                     ))),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color: () {
-                                                            if (itemItem
-                                                                    .isInFertileWindow ==
-                                                                true) {
-                                                              return FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .ovelation;
-                                                            } else if (itemItem
-                                                                    .isInOvulation ==
-                                                                true) {
-                                                              return FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .ovelation;
-                                                            } else if (itemItem
-                                                                    .isInPeriod ==
-                                                                false) {
-                                                              return FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .calendarperiod;
-                                                            } else {
-                                                              return FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryText;
-                                                            }
-                                                          }(),
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color: itemItem
+                                                                  .isPreviousDay ||
+                                                              itemItem
+                                                                  .isNextMonth
+                                                          ? const Color(0x2E57636C)
+                                                          : FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      letterSpacing: 0.0,
+                                                    ),
                                               ),
                                             ),
                                           );
@@ -408,7 +422,9 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             width: 16.0,
                                             height: 16.0,
                                             decoration: BoxDecoration(
-                                              color: const Color(0xFFFFF0F5),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .calendarperiod,
                                               borderRadius:
                                                   BorderRadius.circular(8.0),
                                             ),
@@ -431,7 +447,9 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             width: 16.0,
                                             height: 16.0,
                                             decoration: BoxDecoration(
-                                              color: const Color(0xFFE3F2FD),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .ovelation,
                                               borderRadius:
                                                   BorderRadius.circular(8.0),
                                             ),
@@ -492,7 +510,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Average Cycle Length',
+                                            ' Cycle Length',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -521,7 +539,7 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Average Period Length',
+                                            ' Period Length',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -584,10 +602,10 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                       Column(
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.end,
                                         children: [
                                           Text(
-                                            'Next Fertile Window',
+                                            'Fertile Window',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(

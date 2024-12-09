@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "938272782215",
+    "project_id": "scale360-b0a54",
+    "storage_bucket": "scale360-b0a54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938272782215:android:e365f325a8d232125b0522",
+        "android_client_info": {
+          "package_name": "com.mycompany.disputeai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz_VdR64lzdNhi1Vgm62Ci1P181qcQc9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938272782215:android:563bfca28f62d0c15b0522",
+        "android_client_info": {
+          "package_name": "com.mycompany.igyno"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz_VdR64lzdNhi1Vgm62Ci1P181qcQc9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

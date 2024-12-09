@@ -1,11 +1,12 @@
 // ignore_for_file: unnecessary_getters_setters
 
-import '/backend/schema/util/schema_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'index.dart';
+import '/backend/schema/util/firestore_util.dart';
+
 import '/flutter_flow/flutter_flow_util.dart';
 
-class CalendarStruct extends BaseStruct {
+class CalendarStruct extends FFFirebaseStruct {
   CalendarStruct({
     DateTime? calendarDay,
     bool? isPreviousDay,
@@ -13,12 +14,14 @@ class CalendarStruct extends BaseStruct {
     bool? isInFertileWindow,
     bool? isInOvulation,
     bool? isInPeriod,
+    FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _calendarDay = calendarDay,
         _isPreviousDay = isPreviousDay,
         _isNextMonth = isNextMonth,
         _isInFertileWindow = isInFertileWindow,
         _isInOvulation = isInOvulation,
-        _isInPeriod = isInPeriod;
+        _isInPeriod = isInPeriod,
+        super(firestoreUtilData);
 
   // "calendarDay" field.
   DateTime? _calendarDay;
@@ -177,6 +180,10 @@ CalendarStruct createCalendarStruct({
   bool? isInFertileWindow,
   bool? isInOvulation,
   bool? isInPeriod,
+  Map<String, dynamic> fieldValues = const {},
+  bool clearUnsetFields = true,
+  bool create = false,
+  bool delete = false,
 }) =>
     CalendarStruct(
       calendarDay: calendarDay,
@@ -185,4 +192,69 @@ CalendarStruct createCalendarStruct({
       isInFertileWindow: isInFertileWindow,
       isInOvulation: isInOvulation,
       isInPeriod: isInPeriod,
+      firestoreUtilData: FirestoreUtilData(
+        clearUnsetFields: clearUnsetFields,
+        create: create,
+        delete: delete,
+        fieldValues: fieldValues,
+      ),
     );
+
+CalendarStruct? updateCalendarStruct(
+  CalendarStruct? calendar, {
+  bool clearUnsetFields = true,
+  bool create = false,
+}) =>
+    calendar
+      ?..firestoreUtilData = FirestoreUtilData(
+        clearUnsetFields: clearUnsetFields,
+        create: create,
+      );
+
+void addCalendarStructData(
+  Map<String, dynamic> firestoreData,
+  CalendarStruct? calendar,
+  String fieldName, [
+  bool forFieldValue = false,
+]) {
+  firestoreData.remove(fieldName);
+  if (calendar == null) {
+    return;
+  }
+  if (calendar.firestoreUtilData.delete) {
+    firestoreData[fieldName] = FieldValue.delete();
+    return;
+  }
+  final clearFields =
+      !forFieldValue && calendar.firestoreUtilData.clearUnsetFields;
+  if (clearFields) {
+    firestoreData[fieldName] = <String, dynamic>{};
+  }
+  final calendarData = getCalendarFirestoreData(calendar, forFieldValue);
+  final nestedData = calendarData.map((k, v) => MapEntry('$fieldName.$k', v));
+
+  final mergeFields = calendar.firestoreUtilData.create || clearFields;
+  firestoreData
+      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
+}
+
+Map<String, dynamic> getCalendarFirestoreData(
+  CalendarStruct? calendar, [
+  bool forFieldValue = false,
+]) {
+  if (calendar == null) {
+    return {};
+  }
+  final firestoreData = mapToFirestore(calendar.toMap());
+
+  // Add any Firestore field values
+  calendar.firestoreUtilData.fieldValues
+      .forEach((k, v) => firestoreData[k] = v);
+
+  return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;
+}
+
+List<Map<String, dynamic>> getCalendarListFirestoreData(
+  List<CalendarStruct>? calendars,
+) =>
+    calendars?.map((e) => getCalendarFirestoreData(e, true)).toList() ?? [];
