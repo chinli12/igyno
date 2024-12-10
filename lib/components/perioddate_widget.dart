@@ -1,7 +1,10 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'perioddate_model.dart';
 export 'perioddate_model.dart';
@@ -28,6 +31,20 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PerioddateModel());
+
+    _model.textController1 ??= TextEditingController(
+        text: '${valueOrDefault<String>(
+      _model.periodlength.toString(),
+      '0',
+    )} ${_model.periodlength > 1 ? 'days' : 'day'}');
+    _model.textFieldFocusNode1 ??= FocusNode();
+
+    _model.textController2 ??= TextEditingController(
+        text: '${valueOrDefault<String>(
+      _model.cycle.toString(),
+      '0',
+    )} ${_model.cycle > 1 ? 'days' : 'day'}');
+    _model.textFieldFocusNode2 ??= FocusNode();
   }
 
   @override
@@ -99,21 +116,92 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                '5 Days',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
+                              Expanded(
+                                child: SizedBox(
+                                  width: 200.0,
+                                  child: TextFormField(
+                                    controller: _model.textController1,
+                                    focusNode: _model.textFieldFocusNode1,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      '_model.textController1',
+                                      const Duration(milliseconds: 2000),
+                                      () async {
+                                        _model.periodlength = int.parse(
+                                            _model.textController1.text);
+                                        _model.updatePage(() {});
+                                      },
                                     ),
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      hintText: 'TextField',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    cursorColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    validator: _model.textController1Validator
+                                        .asValidator(context),
+                                  ),
+                                ),
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   FlutterFlowIconButton(
                                     borderRadius: 18.0,
-                                    buttonSize: 36.0,
+                                    buttonSize: 40.0,
                                     fillColor: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     icon: const Icon(
@@ -121,13 +209,15 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                                       color: Color(0xFFFF69B4),
                                       size: 24.0,
                                     ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
+                                    onPressed: () async {
+                                      _model.periodlength =
+                                          _model.periodlength + -1;
+                                      _model.updatePage(() {});
                                     },
                                   ),
                                   FlutterFlowIconButton(
                                     borderRadius: 18.0,
-                                    buttonSize: 36.0,
+                                    buttonSize: 40.0,
                                     fillColor: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     icon: const Icon(
@@ -135,8 +225,10 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                                       color: Color(0xFFFF69B4),
                                       size: 24.0,
                                     ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
+                                    onPressed: () async {
+                                      _model.periodlength =
+                                          _model.periodlength + 1;
+                                      _model.updatePage(() {});
                                     },
                                   ),
                                 ].divide(const SizedBox(width: 12.0)),
@@ -152,7 +244,7 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Last Period Start Date',
+                        ' Period Start Date',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               letterSpacing: 0.0,
@@ -173,7 +265,10 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'March 15, 2024',
+                                valueOrDefault<String>(
+                                  dateTimeFormat("MMMEd", _model.datePicked),
+                                  '0',
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
@@ -181,10 +276,68 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                              const Icon(
-                                Icons.calendar_today,
-                                color: Color(0xFFFF69B4),
-                                size: 24.0,
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  final datePickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: getCurrentTimestamp,
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime(2050),
+                                    builder: (context, child) {
+                                      return wrapInMaterialDatePickerTheme(
+                                        context,
+                                        child!,
+                                        headerBackgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                        headerForegroundColor:
+                                            FlutterFlowTheme.of(context).info,
+                                        headerTextStyle:
+                                            FlutterFlowTheme.of(context)
+                                                .headlineLarge
+                                                .override(
+                                                  fontFamily: 'Inter Tight',
+                                                  fontSize: 32.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                        pickerBackgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                        pickerForegroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        selectedDateTimeBackgroundColor:
+                                            const Color(0xFFFF69B4),
+                                        selectedDateTimeForegroundColor:
+                                            FlutterFlowTheme.of(context).info,
+                                        actionButtonForegroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        iconSize: 24.0,
+                                      );
+                                    },
+                                  );
+
+                                  if (datePickedDate != null) {
+                                    safeSetState(() {
+                                      _model.datePicked = DateTime(
+                                        datePickedDate.year,
+                                        datePickedDate.month,
+                                        datePickedDate.day,
+                                      );
+                                    });
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.calendar_today,
+                                  color: Color(0xFFFF69B4),
+                                  size: 24.0,
+                                ),
                               ),
                             ],
                           ),
@@ -217,21 +370,92 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                '28 Days',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
+                              Expanded(
+                                child: SizedBox(
+                                  width: 200.0,
+                                  child: TextFormField(
+                                    controller: _model.textController2,
+                                    focusNode: _model.textFieldFocusNode2,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      '_model.textController2',
+                                      const Duration(milliseconds: 2000),
+                                      () async {
+                                        _model.cycle = int.parse(
+                                            _model.textController2.text);
+                                        _model.updatePage(() {});
+                                      },
                                     ),
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      hintText: 'TextField',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    cursorColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    validator: _model.textController2Validator
+                                        .asValidator(context),
+                                  ),
+                                ),
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   FlutterFlowIconButton(
                                     borderRadius: 18.0,
-                                    buttonSize: 36.0,
+                                    buttonSize: 40.0,
                                     fillColor: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     icon: const Icon(
@@ -239,13 +463,14 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                                       color: Color(0xFFFF69B4),
                                       size: 24.0,
                                     ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
+                                    onPressed: () async {
+                                      _model.cycle = _model.cycle + -1;
+                                      safeSetState(() {});
                                     },
                                   ),
                                   FlutterFlowIconButton(
                                     borderRadius: 18.0,
-                                    buttonSize: 36.0,
+                                    buttonSize: 40.0,
                                     fillColor: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     icon: const Icon(
@@ -253,8 +478,9 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                                       color: Color(0xFFFF69B4),
                                       size: 24.0,
                                     ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
+                                    onPressed: () async {
+                                      _model.cycle = _model.cycle + 1;
+                                      _model.updatePage(() {});
                                     },
                                   ),
                                 ].divide(const SizedBox(width: 12.0)),
@@ -268,8 +494,23 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                 ].divide(const SizedBox(height: 16.0)),
               ),
               FFButtonWidget(
-                onPressed: () {
-                  print('Button pressed ...');
+                onPressed: () async {
+                  await PeriodTrackRecord.collection
+                      .doc()
+                      .set(createPeriodTrackRecordData(
+                        periodLength: int.tryParse(_model.textController1.text),
+                        periodStartDate: _model.datePicked,
+                        cycleLength: int.tryParse(_model.textController2.text),
+                        owner: currentUserReference,
+                        date: getCurrentTimestamp,
+                      ));
+
+                  await currentUserReference!.update(createUsersRecordData(
+                    periodLength: int.tryParse(_model.textController1.text),
+                    periodStartDate: _model.datePicked,
+                    cycleLength: int.tryParse(_model.textController2.text),
+                  ));
+                  Navigator.pop(context);
                 },
                 text: 'Save Changes',
                 options: FFButtonOptions(

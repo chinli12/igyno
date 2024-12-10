@@ -45,6 +45,21 @@ class UsersRecord extends FirestoreRecord {
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
+  // "PeriodLength" field.
+  int? _periodLength;
+  int get periodLength => _periodLength ?? 0;
+  bool hasPeriodLength() => _periodLength != null;
+
+  // "PeriodStartDate" field.
+  DateTime? _periodStartDate;
+  DateTime? get periodStartDate => _periodStartDate;
+  bool hasPeriodStartDate() => _periodStartDate != null;
+
+  // "CycleLength" field.
+  int? _cycleLength;
+  int get cycleLength => _cycleLength ?? 0;
+  bool hasCycleLength() => _cycleLength != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -52,6 +67,9 @@ class UsersRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
+    _periodLength = castToType<int>(snapshotData['PeriodLength']);
+    _periodStartDate = snapshotData['PeriodStartDate'] as DateTime?;
+    _cycleLength = castToType<int>(snapshotData['CycleLength']);
   }
 
   static CollectionReference get collection =>
@@ -94,6 +112,9 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
+  int? periodLength,
+  DateTime? periodStartDate,
+  int? cycleLength,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -103,6 +124,9 @@ Map<String, dynamic> createUsersRecordData({
       'uid': uid,
       'created_time': createdTime,
       'phone_number': phoneNumber,
+      'PeriodLength': periodLength,
+      'PeriodStartDate': periodStartDate,
+      'CycleLength': cycleLength,
     }.withoutNulls,
   );
 
@@ -119,7 +143,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.phoneNumber == e2?.phoneNumber;
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.periodLength == e2?.periodLength &&
+        e1?.periodStartDate == e2?.periodStartDate &&
+        e1?.cycleLength == e2?.cycleLength;
   }
 
   @override
@@ -129,7 +156,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.photoUrl,
         e?.uid,
         e?.createdTime,
-        e?.phoneNumber
+        e?.phoneNumber,
+        e?.periodLength,
+        e?.periodStartDate,
+        e?.cycleLength
       ]);
 
   @override
