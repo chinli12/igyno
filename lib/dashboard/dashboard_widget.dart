@@ -63,7 +63,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                 ),
                 child: Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(24.0, 35.0, 24.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,

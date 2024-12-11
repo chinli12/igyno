@@ -75,13 +75,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const CalendaWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const AnalyzeWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const CalendaWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const AnalyzeWidget(),
         ),
         FFRoute(
           name: 'HomePage',
@@ -113,9 +113,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'analyze',
           path: '/analyze',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'analyze')
-              : const AnalyzeWidget(),
+          builder: (context, params) => const AnalyzeWidget(),
+        ),
+        FFRoute(
+          name: 'Register',
+          path: '/register',
+          builder: (context, params) => const RegisterWidget(),
+        ),
+        FFRoute(
+          name: 'onboard',
+          path: '/onboard',
+          builder: (context, params) => const OnboardWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -288,7 +296,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/calenda';
+            return '/analyze';
           }
           return null;
         },

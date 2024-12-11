@@ -60,6 +60,41 @@ class UsersRecord extends FirestoreRecord {
   int get cycleLength => _cycleLength ?? 0;
   bool hasCycleLength() => _cycleLength != null;
 
+  // "age" field.
+  int? _age;
+  int get age => _age ?? 0;
+  bool hasAge() => _age != null;
+
+  // "hieght" field.
+  int? _hieght;
+  int get hieght => _hieght ?? 0;
+  bool hasHieght() => _hieght != null;
+
+  // "wieght" field.
+  int? _wieght;
+  int get wieght => _wieght ?? 0;
+  bool hasWieght() => _wieght != null;
+
+  // "Health" field.
+  String? _health;
+  String get health => _health ?? '';
+  bool hasHealth() => _health != null;
+
+  // "Lifestyle" field.
+  String? _lifestyle;
+  String get lifestyle => _lifestyle ?? '';
+  bool hasLifestyle() => _lifestyle != null;
+
+  // "Goals" field.
+  String? _goals;
+  String get goals => _goals ?? '';
+  bool hasGoals() => _goals != null;
+
+  // "completed" field.
+  bool? _completed;
+  bool get completed => _completed ?? false;
+  bool hasCompleted() => _completed != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -70,6 +105,13 @@ class UsersRecord extends FirestoreRecord {
     _periodLength = castToType<int>(snapshotData['PeriodLength']);
     _periodStartDate = snapshotData['PeriodStartDate'] as DateTime?;
     _cycleLength = castToType<int>(snapshotData['CycleLength']);
+    _age = castToType<int>(snapshotData['age']);
+    _hieght = castToType<int>(snapshotData['hieght']);
+    _wieght = castToType<int>(snapshotData['wieght']);
+    _health = snapshotData['Health'] as String?;
+    _lifestyle = snapshotData['Lifestyle'] as String?;
+    _goals = snapshotData['Goals'] as String?;
+    _completed = snapshotData['completed'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -115,6 +157,13 @@ Map<String, dynamic> createUsersRecordData({
   int? periodLength,
   DateTime? periodStartDate,
   int? cycleLength,
+  int? age,
+  int? hieght,
+  int? wieght,
+  String? health,
+  String? lifestyle,
+  String? goals,
+  bool? completed,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -127,6 +176,13 @@ Map<String, dynamic> createUsersRecordData({
       'PeriodLength': periodLength,
       'PeriodStartDate': periodStartDate,
       'CycleLength': cycleLength,
+      'age': age,
+      'hieght': hieght,
+      'wieght': wieght,
+      'Health': health,
+      'Lifestyle': lifestyle,
+      'Goals': goals,
+      'completed': completed,
     }.withoutNulls,
   );
 
@@ -146,7 +202,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.periodLength == e2?.periodLength &&
         e1?.periodStartDate == e2?.periodStartDate &&
-        e1?.cycleLength == e2?.cycleLength;
+        e1?.cycleLength == e2?.cycleLength &&
+        e1?.age == e2?.age &&
+        e1?.hieght == e2?.hieght &&
+        e1?.wieght == e2?.wieght &&
+        e1?.health == e2?.health &&
+        e1?.lifestyle == e2?.lifestyle &&
+        e1?.goals == e2?.goals &&
+        e1?.completed == e2?.completed;
   }
 
   @override
@@ -159,7 +222,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.phoneNumber,
         e?.periodLength,
         e?.periodStartDate,
-        e?.cycleLength
+        e?.cycleLength,
+        e?.age,
+        e?.hieght,
+        e?.wieght,
+        e?.health,
+        e?.lifestyle,
+        e?.goals,
+        e?.completed
       ]);
 
   @override

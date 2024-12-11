@@ -99,28 +99,37 @@ class _PeriodTrendsChartState extends State<PeriodTrendsChart> {
             LineChartData(
               gridData: FlGridData(show: true),
               titlesData: FlTitlesData(
-                leftTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 28,
-                  getTitles: (value) => value
-                      .toInt()
-                      .toString(), // Display cycle lengths on Y-axis
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 28,
+                    getTitlesWidget: (value, _) {
+                      return Text(
+                        value.toInt().toString(),
+                        style: const TextStyle(fontSize: 10),
+                      );
+                    },
+                  ),
                 ),
-                bottomTitles: SideTitles(
-                  showTitles: true,
-                  getTitles: (value) {
-                    // Map index to month-year labels
-                    if (value >= 0 && value < trends.length) {
-                      return trends[value.toInt()]['monthYear'];
-                    }
-                    return '';
-                  },
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    getTitlesWidget: (value, _) {
+                      if (value >= 0 && value < trends.length) {
+                        return Text(
+                          trends[value.toInt()]['monthYear'],
+                          style: const TextStyle(fontSize: 10),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
                 ),
               ),
               borderData: FlBorderData(show: true),
               minX: 0,
               maxX: trends.length - 1.toDouble(),
-              minY: 0, // Adjust based on your data
+              minY: 0,
               maxY: (trends
                       .map((t) => t['cycleLength'] as double)
                       .reduce((a, b) => a > b ? a : b) +
@@ -129,7 +138,9 @@ class _PeriodTrendsChartState extends State<PeriodTrendsChart> {
                 LineChartBarData(
                   spots: spots,
                   isCurved: true,
-                  colors: [Colors.blue],
+                  gradient: LinearGradient(
+                    colors: [Colors.blue, Colors.blueAccent],
+                  ),
                   barWidth: 4,
                   isStrokeCapRound: true,
                   belowBarData: BarAreaData(show: false),
