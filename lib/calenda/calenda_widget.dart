@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/components/perioddate_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -298,90 +299,102 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                       ),
                                     ],
                                   ),
-                                  Builder(
-                                    builder: (context) {
-                                      final item = functions
-                                          .getCalendar(getCurrentTimestamp, 5,
-                                              28, _model.inputedate!)
-                                          .toList();
+                                  AuthUserStreamWidget(
+                                    builder: (context) => Builder(
+                                      builder: (context) {
+                                        final item = functions
+                                            .getCalendar(
+                                                currentUserDocument!
+                                                    .periodStartDate!,
+                                                valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.periodLength,
+                                                    0),
+                                                valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.cycleLength,
+                                                    0),
+                                                _model.inputedate!)
+                                            .toList();
 
-                                      return Wrap(
-                                        spacing: 0.0,
-                                        runSpacing: 16.0,
-                                        alignment: WrapAlignment.start,
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.start,
-                                        direction: Axis.horizontal,
-                                        runAlignment: WrapAlignment.start,
-                                        verticalDirection:
-                                            VerticalDirection.down,
-                                        clipBehavior: Clip.none,
-                                        children: List.generate(item.length,
-                                            (itemIndex) {
-                                          final itemItem = item[itemIndex];
-                                          return Container(
-                                            width: 40.0,
-                                            height: 40.0,
-                                            decoration: BoxDecoration(
-                                              color: () {
-                                                if (itemItem
-                                                        .isInFertileWindow ==
-                                                    true) {
-                                                  return FlutterFlowTheme.of(
-                                                          context)
-                                                      .ovelation;
-                                                } else if (itemItem
-                                                        .isInOvulation ==
-                                                    true) {
-                                                  return FlutterFlowTheme.of(
-                                                          context)
-                                                      .ovelation;
-                                                } else if (itemItem
-                                                        .isInPeriod ==
-                                                    true) {
-                                                  return FlutterFlowTheme.of(
-                                                          context)
-                                                      .calendarperiod;
-                                                } else {
-                                                  return const Color(0x00000000);
-                                                }
-                                              }(),
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ),
-                                            child: Align(
-                                              alignment: const AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Text(
-                                                dateTimeFormat(
-                                                    "d",
-                                                    dateTimeFromSecondsSinceEpoch(
-                                                        valueOrDefault<int>(
-                                                      itemItem.calendarDay
-                                                          ?.secondsSinceEpoch,
-                                                      0,
-                                                    ))),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Inter',
-                                                      color: itemItem
-                                                                  .isPreviousDay ||
-                                                              itemItem
-                                                                  .isNextMonth
-                                                          ? const Color(0x2E57636C)
-                                                          : FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      letterSpacing: 0.0,
-                                                    ),
+                                        return Wrap(
+                                          spacing: 0.0,
+                                          runSpacing: 16.0,
+                                          alignment: WrapAlignment.start,
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.start,
+                                          direction: Axis.horizontal,
+                                          runAlignment: WrapAlignment.start,
+                                          verticalDirection:
+                                              VerticalDirection.down,
+                                          clipBehavior: Clip.none,
+                                          children: List.generate(item.length,
+                                              (itemIndex) {
+                                            final itemItem = item[itemIndex];
+                                            return Container(
+                                              width: 40.0,
+                                              height: 40.0,
+                                              decoration: BoxDecoration(
+                                                color: () {
+                                                  if (itemItem
+                                                          .isInFertileWindow ==
+                                                      true) {
+                                                    return FlutterFlowTheme.of(
+                                                            context)
+                                                        .ovelation;
+                                                  } else if (itemItem
+                                                          .isInOvulation ==
+                                                      true) {
+                                                    return FlutterFlowTheme.of(
+                                                            context)
+                                                        .ovelation;
+                                                  } else if (itemItem
+                                                          .isInPeriod ==
+                                                      true) {
+                                                    return FlutterFlowTheme.of(
+                                                            context)
+                                                        .calendarperiod;
+                                                  } else {
+                                                    return const Color(0x00000000);
+                                                  }
+                                                }(),
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
                                               ),
-                                            ),
-                                          );
-                                        }),
-                                      );
-                                    },
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Text(
+                                                  dateTimeFormat(
+                                                      "d",
+                                                      dateTimeFromSecondsSinceEpoch(
+                                                          valueOrDefault<int>(
+                                                        itemItem.calendarDay
+                                                            ?.secondsSinceEpoch,
+                                                        0,
+                                                      ))),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color: itemItem
+                                                                    .isPreviousDay ||
+                                                                itemItem
+                                                                    .isNextMonth
+                                                            ? const Color(0x2E57636C)
+                                                            : FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ].divide(const SizedBox(height: 16.0)),
                               ),
@@ -528,15 +541,18 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                                   letterSpacing: 0.0,
                                                 ),
                                           ),
-                                          Text(
-                                            '28 Days',
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineSmall
-                                                .override(
-                                                  fontFamily: 'Inter Tight',
-                                                  color: const Color(0xFFFF69B4),
-                                                  letterSpacing: 0.0,
-                                                ),
+                                          AuthUserStreamWidget(
+                                            builder: (context) => Text(
+                                              '${valueOrDefault(currentUserDocument?.cycleLength, 0).toString()} Days',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .headlineSmall
+                                                  .override(
+                                                    fontFamily: 'Inter Tight',
+                                                    color: const Color(0xFFFF69B4),
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -557,15 +573,18 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                                   letterSpacing: 0.0,
                                                 ),
                                           ),
-                                          Text(
-                                            '5 Days',
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineSmall
-                                                .override(
-                                                  fontFamily: 'Inter Tight',
-                                                  color: const Color(0xFFFF69B4),
-                                                  letterSpacing: 0.0,
-                                                ),
+                                          AuthUserStreamWidget(
+                                            builder: (context) => Text(
+                                              '${valueOrDefault(currentUserDocument?.periodLength, 0).toString()} Days',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .headlineSmall
+                                                  .override(
+                                                    fontFamily: 'Inter Tight',
+                                                    color: const Color(0xFFFF69B4),
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -593,16 +612,24 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                                   letterSpacing: 0.0,
                                                 ),
                                           ),
-                                          Text(
-                                            functions.predictNextPeriodStart(
-                                                getCurrentTimestamp, 28),
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineSmall
-                                                .override(
-                                                  fontFamily: 'Inter Tight',
-                                                  color: const Color(0xFFFF69B4),
-                                                  letterSpacing: 0.0,
-                                                ),
+                                          AuthUserStreamWidget(
+                                            builder: (context) => Text(
+                                              functions.predictNextPeriodStart(
+                                                  currentUserDocument!
+                                                      .periodStartDate!,
+                                                  valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.cycleLength,
+                                                      0)),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .headlineSmall
+                                                  .override(
+                                                    fontFamily: 'Inter Tight',
+                                                    color: const Color(0xFFFF69B4),
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -623,17 +650,25 @@ class _CalendaWidgetState extends State<CalendaWidget> {
                                                   letterSpacing: 0.0,
                                                 ),
                                           ),
-                                          Text(
-                                            functions
-                                                .calculateNextFertileWindow(
-                                                    getCurrentTimestamp, 28),
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineSmall
-                                                .override(
-                                                  fontFamily: 'Inter Tight',
-                                                  color: const Color(0xFF1565C0),
-                                                  letterSpacing: 0.0,
-                                                ),
+                                          AuthUserStreamWidget(
+                                            builder: (context) => Text(
+                                              functions
+                                                  .calculateNextFertileWindow(
+                                                      currentUserDocument!
+                                                          .periodStartDate!,
+                                                      valueOrDefault(
+                                                          currentUserDocument
+                                                              ?.cycleLength,
+                                                          0)),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .headlineSmall
+                                                  .override(
+                                                    fontFamily: 'Inter Tight',
+                                                    color: const Color(0xFF1565C0),
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                            ),
                                           ),
                                         ],
                                       ),

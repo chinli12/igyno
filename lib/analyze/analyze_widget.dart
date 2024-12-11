@@ -1,8 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'analyze_model.dart';
 export 'analyze_model.dart';
@@ -480,16 +482,18 @@ class _AnalyzeWidgetState extends State<AnalyzeWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
-                                            Text(
-                                              '28 days',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .headlineSmall
-                                                  .override(
-                                                    fontFamily: 'Inter Tight',
-                                                    color: const Color(0xFFFF69B4),
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                            AuthUserStreamWidget(
+                                              builder: (context) => Text(
+                                                '${valueOrDefault(currentUserDocument?.cycleLength, 0).toString()} days',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .headlineSmall
+                                                    .override(
+                                                      fontFamily: 'Inter Tight',
+                                                      color: const Color(0xFFFF69B4),
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -519,16 +523,18 @@ class _AnalyzeWidgetState extends State<AnalyzeWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
-                                            Text(
-                                              '5 days',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .headlineSmall
-                                                  .override(
-                                                    fontFamily: 'Inter Tight',
-                                                    color: const Color(0xFFFF69B4),
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                            AuthUserStreamWidget(
+                                              builder: (context) => Text(
+                                                '${valueOrDefault(currentUserDocument?.periodLength, 0).toString()} days',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .headlineSmall
+                                                    .override(
+                                                      fontFamily: 'Inter Tight',
+                                                      color: const Color(0xFFFF69B4),
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -539,254 +545,420 @@ class _AnalyzeWidgetState extends State<AnalyzeWidget> {
                               ),
                             ),
                           ),
-                          Material(
-                            color: Colors.transparent,
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 1.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 20.0, 20.0, 20.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      'Symptom Patterns',
-                                      style: FlutterFlowTheme.of(context)
-                                          .headlineSmall
-                                          .override(
-                                            fontFamily: 'Inter Tight',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          1.0,
-                                      height: 160.0,
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Container(
-                                                        width: 12.0,
-                                                        height: 12.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              const Color(0xFFFF69B4),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      6.0),
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Text(
-                                                              'Cramps',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Slider(
-                                                            activeColor: const Color(
-                                                                0xFFFF69B4),
-                                                            inactiveColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                            min: 0.0,
-                                                            max: 10.0,
-                                                            value: _model
-                                                                    .sliderValue1 ??=
-                                                                5.0,
-                                                            onChanged:
-                                                                (newValue) {
-                                                              newValue = double
-                                                                  .parse(newValue
-                                                                      .toStringAsFixed(
-                                                                          2));
-                                                              safeSetState(() =>
-                                                                  _model.sliderValue1 =
-                                                                      newValue);
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ].divide(
-                                                        const SizedBox(width: 8.0)),
-                                                  ),
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Container(
-                                                        width: 12.0,
-                                                        height: 12.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              const Color(0xFFDA70D6),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      6.0),
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Text(
-                                                              'Headache',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Slider(
-                                                            activeColor: const Color(
-                                                                0xFFFF69B4),
-                                                            inactiveColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                            min: 0.0,
-                                                            max: 10.0,
-                                                            value: _model
-                                                                    .sliderValue2 ??=
-                                                                5.0,
-                                                            onChanged:
-                                                                (newValue) {
-                                                              newValue = double
-                                                                  .parse(newValue
-                                                                      .toStringAsFixed(
-                                                                          2));
-                                                              safeSetState(() =>
-                                                                  _model.sliderValue2 =
-                                                                      newValue);
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ].divide(
-                                                        const SizedBox(width: 8.0)),
-                                                  ),
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Container(
-                                                        width: 12.0,
-                                                        height: 12.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              const Color(0xFF9370DB),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      6.0),
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Text(
-                                                              'Mood Swings',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Slider(
-                                                            activeColor: const Color(
-                                                                0xFFFF69B4),
-                                                            inactiveColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                            min: 0.0,
-                                                            max: 10.0,
-                                                            value: _model
-                                                                    .sliderValue3 ??=
-                                                                5.0,
-                                                            onChanged:
-                                                                (newValue) {
-                                                              newValue = double
-                                                                  .parse(newValue
-                                                                      .toStringAsFixed(
-                                                                          2));
-                                                              safeSetState(() =>
-                                                                  _model.sliderValue3 =
-                                                                      newValue);
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ].divide(
-                                                        const SizedBox(width: 8.0)),
-                                                  ),
-                                                ].divide(
-                                                    const SizedBox(height: 12.0)),
-                                              ),
-                                            ),
-                                          ],
+                          AuthUserStreamWidget(
+                            builder: (context) =>
+                                StreamBuilder<UserAnalyRecord>(
+                              stream: UserAnalyRecord.getDocument(
+                                  currentUserDocument!.userAnalysis!),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
                                         ),
                                       ),
                                     ),
-                                  ].divide(const SizedBox(height: 16.0)),
-                                ),
-                              ),
+                                  );
+                                }
+
+                                final containerUserAnalyRecord = snapshot.data!;
+
+                                return Material(
+                                  color: Colors.transparent,
+                                  elevation: 2.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          20.0, 20.0, 20.0, 20.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'Symptom Patterns',
+                                            style: FlutterFlowTheme.of(context)
+                                                .headlineSmall
+                                                .override(
+                                                  fontFamily: 'Inter Tight',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                width: 12.0,
+                                                                height: 12.0,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: const Color(
+                                                                      0xFFFF69B4),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              6.0),
+                                                                ),
+                                                              ),
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Text(
+                                                                      'Crampsn  ',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Inter',
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  Slider(
+                                                                    activeColor:
+                                                                        const Color(
+                                                                            0xFFFF69B4),
+                                                                    inactiveColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .alternate,
+                                                                    min: 0.0,
+                                                                    max: 100.0,
+                                                                    value: _model.sliderValue1 ??= functions
+                                                                        .analyzeSymptomOccurrencePercentage(
+                                                                            containerUserAnalyRecord,
+                                                                            'Cramps')
+                                                                        .toDouble(),
+                                                                    onChanged:
+                                                                        (newValue) {
+                                                                      newValue =
+                                                                          double.parse(
+                                                                              newValue.toStringAsFixed(2));
+                                                                      safeSetState(() =>
+                                                                          _model.sliderValue1 =
+                                                                              newValue);
+                                                                    },
+                                                                  ),
+                                                                  Text(
+                                                                    '${functions.analyzeSymptomOccurrencePercentage(containerUserAnalyRecord, 'Cramps').toString()}%',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Inter',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ].divide(const SizedBox(
+                                                                width: 8.0)),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                width: 12.0,
+                                                                height: 12.0,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: const Color(
+                                                                      0xFFDA70D6),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              6.0),
+                                                                ),
+                                                              ),
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Text(
+                                                                      'Headache',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Inter',
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  Slider(
+                                                                    activeColor:
+                                                                        const Color(
+                                                                            0xFFFF69B4),
+                                                                    inactiveColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .alternate,
+                                                                    min: 0.0,
+                                                                    max: 100.0,
+                                                                    value: _model.sliderValue2 ??= functions
+                                                                        .analyzeSymptomOccurrencePercentage(
+                                                                            containerUserAnalyRecord,
+                                                                            'Headache')
+                                                                        .toDouble(),
+                                                                    onChanged:
+                                                                        (newValue) {
+                                                                      newValue =
+                                                                          double.parse(
+                                                                              newValue.toStringAsFixed(2));
+                                                                      safeSetState(() =>
+                                                                          _model.sliderValue2 =
+                                                                              newValue);
+                                                                    },
+                                                                  ),
+                                                                  Text(
+                                                                    '${functions.analyzeSymptomOccurrencePercentage(containerUserAnalyRecord, 'Headache').toString()}%',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Inter',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ].divide(const SizedBox(
+                                                                width: 8.0)),
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Container(
+                                                              width: 12.0,
+                                                              height: 12.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: const Color(
+                                                                    0xFF9370DB),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            6.0),
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Text(
+                                                                    'Fatigue     ',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Inter',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                                Slider(
+                                                                  activeColor:
+                                                                      const Color(
+                                                                          0xFFFF69B4),
+                                                                  inactiveColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                  min: 0.0,
+                                                                  max: 100.0,
+                                                                  value: _model.sliderValue3 ??= functions
+                                                                      .analyzeSymptomOccurrencePercentage(
+                                                                          containerUserAnalyRecord,
+                                                                          'Fatigue')
+                                                                      .toDouble(),
+                                                                  onChanged:
+                                                                      (newValue) {
+                                                                    newValue = double.parse(
+                                                                        newValue
+                                                                            .toStringAsFixed(2));
+                                                                    safeSetState(() =>
+                                                                        _model.sliderValue3 =
+                                                                            newValue);
+                                                                  },
+                                                                ),
+                                                                Text(
+                                                                  '${functions.analyzeSymptomOccurrencePercentage(containerUserAnalyRecord, 'Fatigue').toString()}%',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ].divide(const SizedBox(
+                                                              width: 8.0)),
+                                                        ),
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Container(
+                                                              width: 12.0,
+                                                              height: 12.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: const Color(
+                                                                    0xFF9370DB),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            6.0),
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Text(
+                                                                    'Bloating    ',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Inter',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                                Slider(
+                                                                  activeColor:
+                                                                      const Color(
+                                                                          0xFFFF69B4),
+                                                                  inactiveColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                  min: 0.0,
+                                                                  max: 100.0,
+                                                                  value: _model.sliderValue4 ??= functions
+                                                                      .analyzeSymptomOccurrencePercentage(
+                                                                          containerUserAnalyRecord,
+                                                                          'Bloating')
+                                                                      .toDouble(),
+                                                                  onChanged:
+                                                                      (newValue) {
+                                                                    newValue = double.parse(
+                                                                        newValue
+                                                                            .toStringAsFixed(2));
+                                                                    safeSetState(() =>
+                                                                        _model.sliderValue4 =
+                                                                            newValue);
+                                                                  },
+                                                                ),
+                                                                Text(
+                                                                  '${functions.analyzeSymptomOccurrencePercentage(containerUserAnalyRecord, 'Bloating ').toString()}%',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ].divide(const SizedBox(
+                                                              width: 8.0)),
+                                                        ),
+                                                      ].divide(const SizedBox(
+                                                          height: 12.0)),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ].divide(const SizedBox(height: 16.0)),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                           Material(
@@ -841,17 +1013,26 @@ class _AnalyzeWidgetState extends State<AnalyzeWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
-                                            Text(
-                                              'June 15-20',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color:
-                                                            const Color(0xFFFF69B4),
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                            AuthUserStreamWidget(
+                                              builder: (context) => Text(
+                                                functions
+                                                    .predictNextPeriodStart(
+                                                        currentUserDocument!
+                                                            .periodStartDate!,
+                                                        valueOrDefault(
+                                                            currentUserDocument
+                                                                ?.periodLength,
+                                                            0)),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color:
+                                                              const Color(0xFFFF69B4),
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -886,17 +1067,26 @@ class _AnalyzeWidgetState extends State<AnalyzeWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
-                                            Text(
-                                              'June 1-5',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color:
-                                                            const Color(0xFFFF69B4),
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                            AuthUserStreamWidget(
+                                              builder: (context) => Text(
+                                                functions
+                                                    .calculateNextFertileWindow(
+                                                        currentUserDocument!
+                                                            .periodStartDate!,
+                                                        valueOrDefault(
+                                                            currentUserDocument
+                                                                ?.cycleLength,
+                                                            0)),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color:
+                                                              const Color(0xFFFF69B4),
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                             ),
                                           ],
                                         ),

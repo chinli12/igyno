@@ -979,6 +979,19 @@ class _OnboardWidgetState extends State<OnboardWidget> {
                                       _model.lifestyleValue != '') &&
                                   (_model.goalsValue != null &&
                                       _model.goalsValue != '')) {
+                                var userAnalyRecordReference =
+                                    UserAnalyRecord.collection.doc();
+                                await userAnalyRecordReference
+                                    .set(createUserAnalyRecordData(
+                                  owner: currentUserReference,
+                                ));
+                                _model.useranalysis =
+                                    UserAnalyRecord.getDocumentFromData(
+                                        createUserAnalyRecordData(
+                                          owner: currentUserReference,
+                                        ),
+                                        userAnalyRecordReference);
+
                                 await currentUserReference!
                                     .update(createUsersRecordData(
                                   periodLength:
@@ -996,13 +1009,8 @@ class _OnboardWidgetState extends State<OnboardWidget> {
                                   lifestyle: _model.lifestyleValue,
                                   goals: _model.goalsValue,
                                   completed: true,
+                                  userAnalysis: _model.useranalysis?.reference,
                                 ));
-
-                                await UserAnalyRecord.collection
-                                    .doc()
-                                    .set(createUserAnalyRecordData(
-                                      owner: currentUserReference,
-                                    ));
 
                                 context.goNamed('Dashboard');
                               } else {
@@ -1021,6 +1029,8 @@ class _OnboardWidgetState extends State<OnboardWidget> {
                                   ),
                                 );
                               }
+
+                              safeSetState(() {});
                             },
                             text: 'Complete Profile',
                             options: FFButtonOptions(

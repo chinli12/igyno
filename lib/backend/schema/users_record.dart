@@ -95,6 +95,21 @@ class UsersRecord extends FirestoreRecord {
   bool get completed => _completed ?? false;
   bool hasCompleted() => _completed != null;
 
+  // "userAnalysis" field.
+  DocumentReference? _userAnalysis;
+  DocumentReference? get userAnalysis => _userAnalysis;
+  bool hasUserAnalysis() => _userAnalysis != null;
+
+  // "Flow" field.
+  String? _flow;
+  String get flow => _flow ?? '';
+  bool hasFlow() => _flow != null;
+
+  // "mod" field.
+  String? _mod;
+  String get mod => _mod ?? '';
+  bool hasMod() => _mod != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -112,6 +127,9 @@ class UsersRecord extends FirestoreRecord {
     _lifestyle = snapshotData['Lifestyle'] as String?;
     _goals = snapshotData['Goals'] as String?;
     _completed = snapshotData['completed'] as bool?;
+    _userAnalysis = snapshotData['userAnalysis'] as DocumentReference?;
+    _flow = snapshotData['Flow'] as String?;
+    _mod = snapshotData['mod'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -164,6 +182,9 @@ Map<String, dynamic> createUsersRecordData({
   String? lifestyle,
   String? goals,
   bool? completed,
+  DocumentReference? userAnalysis,
+  String? flow,
+  String? mod,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -183,6 +204,9 @@ Map<String, dynamic> createUsersRecordData({
       'Lifestyle': lifestyle,
       'Goals': goals,
       'completed': completed,
+      'userAnalysis': userAnalysis,
+      'Flow': flow,
+      'mod': mod,
     }.withoutNulls,
   );
 
@@ -209,7 +233,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.health == e2?.health &&
         e1?.lifestyle == e2?.lifestyle &&
         e1?.goals == e2?.goals &&
-        e1?.completed == e2?.completed;
+        e1?.completed == e2?.completed &&
+        e1?.userAnalysis == e2?.userAnalysis &&
+        e1?.flow == e2?.flow &&
+        e1?.mod == e2?.mod;
   }
 
   @override
@@ -229,7 +256,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.health,
         e?.lifestyle,
         e?.goals,
-        e?.completed
+        e?.completed,
+        e?.userAnalysis,
+        e?.flow,
+        e?.mod
       ]);
 
   @override

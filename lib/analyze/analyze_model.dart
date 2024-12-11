@@ -11,6 +11,8 @@ class AnalyzeModel extends FlutterFlowModel<AnalyzeWidget> {
   double? sliderValue2;
   // State field(s) for Slider widget.
   double? sliderValue3;
+  // State field(s) for Slider widget.
+  double? sliderValue4;
 
   @override
   void initState(BuildContext context) {}

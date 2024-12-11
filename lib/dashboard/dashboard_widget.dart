@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -291,15 +293,18 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                               letterSpacing: 0.0,
                                             ),
                                       ),
-                                      Text(
-                                        'Energetic',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color: const Color(0xFFFF69B4),
-                                              letterSpacing: 0.0,
-                                            ),
+                                      AuthUserStreamWidget(
+                                        builder: (context) => Text(
+                                          valueOrDefault(
+                                              currentUserDocument?.mod, ''),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: const Color(0xFFFF69B4),
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
                                       ),
                                     ].divide(const SizedBox(height: 8.0)),
                                   ),
@@ -341,15 +346,18 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                               letterSpacing: 0.0,
                                             ),
                                       ),
-                                      Text(
-                                        'None',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color: const Color(0xFFFF69B4),
-                                              letterSpacing: 0.0,
-                                            ),
+                                      AuthUserStreamWidget(
+                                        builder: (context) => Text(
+                                          valueOrDefault(
+                                              currentUserDocument?.flow, ''),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: const Color(0xFFFF69B4),
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
                                       ),
                                     ].divide(const SizedBox(height: 8.0)),
                                   ),
@@ -386,106 +394,87 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                           letterSpacing: 0.0,
                                         ),
                                   ),
-                                  Wrap(
-                                    spacing: 8.0,
-                                    runSpacing: 8.0,
-                                    alignment: WrapAlignment.start,
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.start,
-                                    direction: Axis.horizontal,
-                                    runAlignment: WrapAlignment.start,
-                                    verticalDirection: VerticalDirection.down,
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFFFF0F5),
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 16.0, 8.0, 16.0),
-                                          child: Text(
-                                            'Headache',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: const Color(0xFFFF69B4),
-                                                  letterSpacing: 0.0,
+                                  AuthUserStreamWidget(
+                                    builder: (context) =>
+                                        StreamBuilder<UserAnalyRecord>(
+                                      stream: UserAnalyRecord.getDocument(
+                                          currentUserDocument!.userAnalysis!),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
                                                 ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFFFF0F5),
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 16.0, 8.0, 16.0),
-                                          child: Text(
-                                            'Cramps',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: const Color(0xFFFF69B4),
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFFFF0F5),
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 16.0, 8.0, 16.0),
-                                          child: Text(
-                                            'Bloating',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: const Color(0xFFFF69B4),
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFFFF0F5),
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 16.0, 8.0, 16.0),
-                                          child: Text(
-                                            'Fatigue',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: const Color(0xFFFF69B4),
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                              ),
+                                            ),
+                                          );
+                                        }
+
+                                        final wrapUserAnalyRecord =
+                                            snapshot.data!;
+
+                                        return Builder(
+                                          builder: (context) {
+                                            final symptom = wrapUserAnalyRecord
+                                                .symptom
+                                                .toList();
+
+                                            return Wrap(
+                                              spacing: 8.0,
+                                              runSpacing: 8.0,
+                                              alignment: WrapAlignment.start,
+                                              crossAxisAlignment:
+                                                  WrapCrossAlignment.start,
+                                              direction: Axis.horizontal,
+                                              runAlignment: WrapAlignment.start,
+                                              verticalDirection:
+                                                  VerticalDirection.down,
+                                              clipBehavior: Clip.none,
+                                              children:
+                                                  List.generate(symptom.length,
+                                                      (symptomIndex) {
+                                                final symptomItem =
+                                                    symptom[symptomIndex];
+                                                return Container(
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0xFFFFF0F5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(8.0, 16.0,
+                                                                8.0, 16.0),
+                                                    child: Text(
+                                                      symptomItem,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            color: const Color(
+                                                                0xFFFF69B4),
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ].divide(const SizedBox(height: 16.0)),
                               ),

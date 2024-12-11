@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'onboard_widget.dart' show OnboardWidget;
@@ -47,6 +48,8 @@ class OnboardModel extends FlutterFlowModel<OnboardWidget> {
   String? get goalsValue => goalsValueController?.value?.firstOrNull;
   set goalsValue(String? val) =>
       goalsValueController?.value = val != null ? [val] : [];
+  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  UserAnalyRecord? useranalysis;
 
   @override
   void initState(BuildContext context) {}
