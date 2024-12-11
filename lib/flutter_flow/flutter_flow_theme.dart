@@ -56,6 +56,7 @@ abstract class FlutterFlowTheme {
 
   late Color calendarperiod;
   late Color ovelation;
+  late Color mainbg;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -147,6 +148,7 @@ class LightModeTheme extends FlutterFlowTheme {
 
   late Color calendarperiod = const Color(0xFFFFF0F5);
   late Color ovelation = const Color(0xFFE3F2FD);
+  late Color mainbg = const Color(0xFFFF69B4);
 }
 
 abstract class Typography {
@@ -321,6 +323,7 @@ class DarkModeTheme extends FlutterFlowTheme {
 
   late Color calendarperiod = const Color(0xFFE09F3D);
   late Color ovelation = const Color(0xFF49766A);
+  late Color mainbg = const Color(0xFF34051D);
 }
 
 extension TextStyleHelper on TextStyle {

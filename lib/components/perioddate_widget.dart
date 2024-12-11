@@ -32,19 +32,19 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
     super.initState();
     _model = createModel(context, () => PerioddateModel());
 
-    _model.textController1 ??= TextEditingController(
+    _model.periodLenghtTextController ??= TextEditingController(
         text: '${valueOrDefault<String>(
       _model.periodlength.toString(),
       '0',
     )} ${_model.periodlength > 1 ? 'days' : 'day'}');
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.periodLenghtFocusNode ??= FocusNode();
 
     _model.textController2 ??= TextEditingController(
         text: '${valueOrDefault<String>(
       _model.cycle.toString(),
       '0',
     )} ${_model.cycle > 1 ? 'days' : 'day'}');
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -120,14 +120,15 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                                 child: SizedBox(
                                   width: 200.0,
                                   child: TextFormField(
-                                    controller: _model.textController1,
-                                    focusNode: _model.textFieldFocusNode1,
+                                    controller:
+                                        _model.periodLenghtTextController,
+                                    focusNode: _model.periodLenghtFocusNode,
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      '_model.textController1',
+                                      '_model.periodLenghtTextController',
                                       const Duration(milliseconds: 2000),
                                       () async {
-                                        _model.periodlength = int.parse(
-                                            _model.textController1.text);
+                                        _model.periodlength = int.parse(_model
+                                            .periodLenghtTextController.text);
                                         _model.updatePage(() {});
                                       },
                                     ),
@@ -191,7 +192,8 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                                         ),
                                     cursorColor: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    validator: _model.textController1Validator
+                                    validator: _model
+                                        .periodLenghtTextControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -375,7 +377,7 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                                   width: 200.0,
                                   child: TextFormField(
                                     controller: _model.textController2,
-                                    focusNode: _model.textFieldFocusNode2,
+                                    focusNode: _model.textFieldFocusNode,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_model.textController2',
                                       const Duration(milliseconds: 2000),
@@ -498,7 +500,8 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                   await PeriodTrackRecord.collection
                       .doc()
                       .set(createPeriodTrackRecordData(
-                        periodLength: int.tryParse(_model.textController1.text),
+                        periodLength: int.tryParse(
+                            _model.periodLenghtTextController.text),
                         periodStartDate: _model.datePicked,
                         cycleLength: int.tryParse(_model.textController2.text),
                         owner: currentUserReference,
@@ -506,7 +509,8 @@ class _PerioddateWidgetState extends State<PerioddateWidget> {
                       ));
 
                   await currentUserReference!.update(createUsersRecordData(
-                    periodLength: int.tryParse(_model.textController1.text),
+                    periodLength:
+                        int.tryParse(_model.periodLenghtTextController.text),
                     periodStartDate: _model.datePicked,
                     cycleLength: int.tryParse(_model.textController2.text),
                   ));

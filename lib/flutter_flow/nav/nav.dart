@@ -8,6 +8,7 @@ import '/backend/schema/structs/index.dart';
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
+import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -74,38 +75,47 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const DashboardWidget() : const CalendaWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const CalendaWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const DashboardWidget() : const CalendaWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const CalendaWidget(),
         ),
         FFRoute(
           name: 'HomePage',
           path: '/homePage',
-          builder: (context, params) => const HomePageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'HomePage')
+              : const HomePageWidget(),
         ),
         FFRoute(
           name: 'Dashboard',
           path: '/dashboard',
-          builder: (context, params) => const DashboardWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Dashboard')
+              : const DashboardWidget(),
         ),
         FFRoute(
           name: 'Calenda',
           path: '/calenda',
-          builder: (context, params) => const CalendaWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Calenda')
+              : const CalendaWidget(),
         ),
         FFRoute(
           name: 'Track',
           path: '/track',
-          builder: (context, params) => const TrackWidget(),
+          builder: (context, params) =>
+              params.isEmpty ? const NavBarPage(initialPage: 'Track') : const TrackWidget(),
         ),
         FFRoute(
           name: 'analyze',
           path: '/analyze',
-          builder: (context, params) => const AnalyzeWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'analyze')
+              : const AnalyzeWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
