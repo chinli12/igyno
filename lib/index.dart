@@ -6,3 +6,4 @@ export '/track/track_widget.dart' show TrackWidget;
 export '/analyze/analyze_widget.dart' show AnalyzeWidget;
 export '/register/register_widget.dart' show RegisterWidget;
 export '/onboard/onboard_widget.dart' show OnboardWidget;
+export '/login/login_widget.dart' show LoginWidget;
